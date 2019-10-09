@@ -119,5 +119,24 @@ class BaseViewController: UIViewController {
           })
       }
       
+    
+    /**
+     * showing error in the alert
+     * @param strErrorText - text which need to show in alert
+     */
+    func ShowError(_ strErrorText : String)
+    {
+        
+        let alertController:UIAlertController = UIAlertController.init(title: "Error", message: strErrorText, preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction.init(title: "Ok", style: UIAlertAction.Style.cancel, handler: { (UIAlertAction) -> Void in
+            DispatchQueue.main.async { () -> Void in
+                alertController.dismiss(animated: true, completion: nil)
+            }
+        }))
+        DispatchQueue.main.async { () -> Void in
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+    }
 
 }

@@ -12,7 +12,6 @@ import UIKit
  struct Constants {
     
     enum Config {
-        static let requestURL = ".json"
         static let apiKey = "8eac22f4c24d01c480e4d99fef2edfc3"
         static let baseAPIURL = "https://api.themoviedb.org/3"
     }
@@ -24,12 +23,6 @@ import UIKit
         static let secondaryColor = UIColor.lightGray
         static let contactLabelColor =  UIColor.init(hexString: "#4A4A4A")
     }
-    
-    enum Length
-    {
-        static let phoneNumber: Int = 13
-    }
-    
     
     enum TableIdentifier
     {
@@ -43,12 +36,24 @@ import UIKit
     
     enum TableCustomCell
     {
-        static let movie  = "MovieCell"
+        static let movie  = "MovieListCustomCell"
+    }
+    
+    enum APIMethodType{
+        static let get                          = "GET"
+        static let put                          = "PUT"
+        static let post                         = "POST"
     }
     
     enum Images
     {
-        static let customLoader  = "customLoader"
+        static let customLoader                 = "customLoader"
+    }
+    
+    enum Strings{
+        static let applicationJson              = "application/json"
+        static let contentType                  = "Content-Type"
+        static let DATA                         = "data"
     }
     
 }

@@ -18,34 +18,37 @@ class MovieListViewController: BaseViewController {
       fileprivate var movieListSearch: [Movie] = []
       fileprivate  var movieListSections: [MovieListSection] = []
       fileprivate  var selectedContactURL: String?
-       fileprivate var isSearchActive : Bool = false
+      fileprivate var isSearchActive : Bool = false
+      fileprivate var pageindex: Int = 1
+      fileprivate var totalPages : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         collectionView.register(UINib(nibName: Constants.TableCustomCell.movie, bundle: nil), forCellWithReuseIdentifier: Constants.TableIdentifier.movieCell)
         fetchMovies()
         // Do any additional setup after loading the view.
     }
     
     /**
-     This method is used to get all the contacts from the server
+     This method is used to get all the Movies from the server
      */
     private func fetchMovies()
     {
         self.showCustomLoader()
         DispatchQueue.main.async(execute: {
-//            ContactProvider.contacts(withCompletion: { result in
-//                switch result {
-//                case .success(let allContact):
-//                    self.contactList = allContact
-//                    self.contactListSections = ContactProvider.getAllContactsWithIndex(contacts: allContact)
-//                    self.refreshUI()
-//                case .failure(_):
-//                    self.hideCustomLoader()
-//                    self.ShowError(errorContactList)
-//                }
-//            })
+            MovieController.movies(pageIndex: self.pageindex, withCompletion: { result in
+                switch result {
+                case .success(let allMovie):
+                    self.hideCustomLoader()
+                    self.movieList.append(contentsOf: allMovie.results)
+                    self.totalPages = allMovie.totalPages
+                    self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieList)
+                    self.refreshUI()
+                case .failure(let error):
+                    self.hideCustomLoader()
+                    self.ShowError(error.localizedDescription)
+                }
+            })
         })
     }
     
@@ -81,7 +84,7 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.TableIdentifier.movieCell, for: indexPath) as! MovieCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.TableIdentifier.movieCell, for: indexPath) as! MovieListCustomCell
         let movie = movieList[indexPath.item]
         cell.configure(movie)
         return cell
@@ -92,6 +95,16 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
         
         //movieDetailVC.movieId = movies[indexPath.item].id
         present(movieDetailVC, animated: true, completion: nil)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+            if indexPath.row == movieList.count / 2 - 1 {  //numberofitem count
+                if pageindex < totalPages
+                {
+                    pageindex += 1
+                    fetchMovies()
+                }
+        }
     }
     
 }
@@ -111,13 +124,13 @@ extension MovieListViewController: UISearchBarDelegate {
             if (movieListSearch.count > 0)
             {
                 self.movieListSections.removeAll()
-               // self.movieListSections = ContactProvider.getAllContactsWithIndex(contacts: movieListSections)
+                self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieList)
             }
             if searchText.count == 0
             {
                self.hideKeyboard()
                 self.movieListSections.removeAll()
-               // self.movieListSections = ContactProvider.getAllContactsWithIndex(contacts: movieList)
+                self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieList)
             }
             collectionView.reloadData()
         }
@@ -137,7 +150,7 @@ extension MovieListViewController: UISearchBarDelegate {
        self.hideKeyboard()
         self.movieListSearch.removeAll()
         self.movieListSections.removeAll()
-       // self.movieListSections = ContactProvider.getAllContactsWithIndex(contacts: contactList)
+        self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieList)
         self.refreshUI()
     }
     

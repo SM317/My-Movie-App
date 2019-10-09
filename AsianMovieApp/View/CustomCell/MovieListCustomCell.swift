@@ -1,5 +1,5 @@
 //
-//  MovieCell.swift
+//  MovieListCustomCell.swift
 //  AsianMovieApp
 //
 //  Created by SourabhMehta on 09/10/19.
@@ -9,14 +9,12 @@
 import UIKit
 import Kingfisher
 
-class MovieCell: UICollectionViewCell {
+class MovieListCustomCell: UICollectionViewCell {
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var ratingLabel: UILabel!
     
-    @IBOutlet var unfocusedConstraint: NSLayoutConstraint!
-    var focusedConstraint: NSLayoutConstraint!
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -29,13 +27,10 @@ class MovieCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        focusedConstraint = titleLabel.topAnchor.constraint(equalTo: imageView.focusedFrameGuide.bottomAnchor, constant: 16)
     }
     
     override func updateConstraints() {
         super.updateConstraints()
-        focusedConstraint?.isActive = isFocused
-        unfocusedConstraint?.isActive = !isFocused
     }
     
     func configure(_ movie: Movie) {
@@ -50,14 +45,5 @@ class MovieCell: UICollectionViewCell {
             ratingLabel.text = movie.ratingText
 
         }
-    }
-    
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        super.didUpdateFocus(in: context, with: coordinator)
-        
-        setNeedsUpdateConstraints()
-        coordinator.addCoordinatedAnimations({
-            self.layoutIfNeeded()
-        }, completion: nil)
     }
 }
