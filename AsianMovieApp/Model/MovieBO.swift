@@ -93,3 +93,8 @@ public struct MovieCrew: Codable {
     public let job: String
     public let name: String
 }
+
+public struct MovieListSection {
+    let sectionTitle: String
+    let movies: [Movie]
+}
