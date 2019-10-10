@@ -26,6 +26,7 @@ public struct Movie: Codable {
     public let voteAverage: Double
     public let voteCount: Int
     public let tagline: String?
+    public let originalLanguage: String?
     public let genres: [MovieGenre]?
     public let videos: MovieVideoResponse?
     public let credits: MovieCreditResponse?

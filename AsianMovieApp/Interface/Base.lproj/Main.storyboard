@@ -31,33 +31,39 @@
                                     <constraint firstAttribute="height" constant="56" id="BLb-mQ-Q2P"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <connections>
+                                    <outlet property="delegate" destination="PHk-hW-aCk" id="FLg-tV-AwF"/>
+                                </connections>
                             </searchBar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JOK-OG-Gi6">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vsc-VO-GYk">
                                 <rect key="frame" x="0.0" y="100" width="375" height="567"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fbj-jk-HuY">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCell" id="SKW-1y-rnR" customClass="MovieListCell" customModule="AsianMovieApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SKW-1y-rnR" id="5lX-dk-Vxt">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="PHk-hW-aCk" id="xHU-z6-X1e"/>
-                                    <outlet property="delegate" destination="PHk-hW-aCk" id="AxP-AQ-js2"/>
+                                    <outlet property="dataSource" destination="PHk-hW-aCk" id="4B6-lA-elA"/>
+                                    <outlet property="delegate" destination="PHk-hW-aCk" id="2Ti-Gg-B3f"/>
                                 </connections>
-                            </collectionView>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="JOK-OG-Gi6" firstAttribute="bottom" secondItem="b1k-0s-Q3X" secondAttribute="bottom" id="NZc-Ui-1xb"/>
+                            <constraint firstItem="vsc-VO-GYk" firstAttribute="bottom" secondItem="b1k-0s-Q3X" secondAttribute="bottom" id="L0J-ix-1OD"/>
+                            <constraint firstItem="vsc-VO-GYk" firstAttribute="trailing" secondItem="b1k-0s-Q3X" secondAttribute="trailing" id="UKr-KZ-MUI"/>
                             <constraint firstItem="x1f-fl-Hqc" firstAttribute="centerX" secondItem="7bq-Gy-cPh" secondAttribute="centerX" id="WC1-ec-9yR"/>
+                            <constraint firstItem="vsc-VO-GYk" firstAttribute="leading" secondItem="b1k-0s-Q3X" secondAttribute="leading" id="XIB-do-JTR"/>
                             <constraint firstItem="vUL-66-vNS" firstAttribute="leading" secondItem="b1k-0s-Q3X" secondAttribute="leading" id="dOl-k1-apy"/>
                             <constraint firstItem="x1f-fl-Hqc" firstAttribute="centerY" secondItem="7bq-Gy-cPh" secondAttribute="centerY" id="g8Q-1I-Src"/>
-                            <constraint firstItem="JOK-OG-Gi6" firstAttribute="trailing" secondItem="b1k-0s-Q3X" secondAttribute="trailing" id="gbk-ZF-mW0"/>
-                            <constraint firstItem="JOK-OG-Gi6" firstAttribute="top" secondItem="vUL-66-vNS" secondAttribute="bottom" id="kEN-7P-OSv"/>
-                            <constraint firstItem="JOK-OG-Gi6" firstAttribute="leading" secondItem="b1k-0s-Q3X" secondAttribute="leading" id="kY7-Kb-Tgz"/>
                             <constraint firstItem="vUL-66-vNS" firstAttribute="trailing" secondItem="b1k-0s-Q3X" secondAttribute="trailing" id="mKH-HV-rf6"/>
+                            <constraint firstItem="vsc-VO-GYk" firstAttribute="top" secondItem="vUL-66-vNS" secondAttribute="bottom" id="ocf-t4-X2C"/>
                             <constraint firstItem="x1f-fl-Hqc" firstAttribute="leading" secondItem="b1k-0s-Q3X" secondAttribute="leading" constant="20" id="qcL-3V-EAC"/>
                             <constraint firstItem="vUL-66-vNS" firstAttribute="top" secondItem="b1k-0s-Q3X" secondAttribute="top" id="zE3-mv-vaL"/>
                         </constraints>
@@ -65,8 +71,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="eKV-mA-NUX"/>
                     <connections>
-                        <outlet property="collectionView" destination="JOK-OG-Gi6" id="LDW-nU-xQJ"/>
                         <outlet property="infoLabel" destination="x1f-fl-Hqc" id="y6O-Va-751"/>
+                        <outlet property="movieListTableView" destination="vsc-VO-GYk" id="cgm-6g-q90"/>
                         <outlet property="searchBar" destination="vUL-66-vNS" id="sYE-CS-9bO"/>
                     </connections>
                 </viewController>

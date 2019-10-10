@@ -27,16 +27,18 @@ import UIKit
     enum TableIdentifier
     {
         static let movieCell = "movieCell"
+        static let loadMoreMovieCell = "loadCell"
     }
     
     enum TableConstants
     {
-        static let CELLHEIGHT : CGFloat = 64.0
+        static let CELLHEIGHT : CGFloat = 200.0
     }
     
     enum TableCustomCell
     {
-        static let movie  = "MovieListCustomCell"
+        static let movie  = "MovieListCell"
+        static let loadMovie  = "LoadMovieCell"
     }
     
     enum APIMethodType{

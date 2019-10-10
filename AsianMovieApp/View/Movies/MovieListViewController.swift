@@ -11,8 +11,8 @@ import UIKit
 class MovieListViewController: BaseViewController {
 
       @IBOutlet weak var searchBar: UISearchBar!
-      @IBOutlet var collectionView: UICollectionView!
-      @IBOutlet var infoLabel: UILabel!
+     @IBOutlet weak var movieListTableView: UITableView!
+     @IBOutlet var infoLabel: UILabel!
 
       fileprivate var movieList: [Movie] = []
       fileprivate var movieListSearch: [Movie] = []
@@ -21,12 +21,25 @@ class MovieListViewController: BaseViewController {
       fileprivate var isSearchActive : Bool = false
       fileprivate var pageindex: Int = 1
       fileprivate var totalPages : Int = 0
+      var isDataLoading:Bool=false
+      var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.register(UINib(nibName: Constants.TableCustomCell.movie, bundle: nil), forCellWithReuseIdentifier: Constants.TableIdentifier.movieCell)
+        
+        self.title = "Movie List"
+        
+         self.movieListTableView!.register(UINib.init(nibName: Constants.TableCustomCell.movie, bundle: nil), forCellReuseIdentifier: Constants.TableIdentifier.movieCell)
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: UIControl.Event.valueChanged)
+        movieListTableView.addSubview(refreshControl)
         fetchMovies()
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func refresh(sender:AnyObject) {
+        self.pageindex = 1
+        fetchMovies()
     }
     
     /**
@@ -62,7 +75,7 @@ class MovieListViewController: BaseViewController {
                 return
             }
             self?.hideCustomLoader()
-            weakSelf.collectionView.reloadData()
+            weakSelf.movieListTableView.reloadData()
         }
     }
     
@@ -77,34 +90,40 @@ class MovieListViewController: BaseViewController {
 
 }
 
-extension MovieListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieList.count
+extension MovieListViewController: UITableViewDataSource {
+     // MARK: - UITableview Datasource
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return movieListSections.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.TableIdentifier.movieCell, for: indexPath) as! MovieListCustomCell
-        let movie = movieList[indexPath.item]
-        cell.configure(movie)
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movieDetailVC = storyboard!.instantiateViewController(withIdentifier: "MovieDetailViewController") as! MovieDetailsViewController
-        
-        //movieDetailVC.movieId = movies[indexPath.item].id
-        present(movieDetailVC, animated: true, completion: nil)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-            if indexPath.row == movieList.count / 2 - 1 {  //numberofitem count
-                if pageindex < totalPages
-                {
-                    pageindex += 1
-                    fetchMovies()
-                }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if movieListSections[section].movies.count == 0 {
+            return nil
         }
+        return movieListSections[section].sectionTitle
+    }
+
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return movieListSections.compactMap({ $0.sectionTitle })
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return movieListSections[section].movies.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+          let cell:MovieListCell = tableView.dequeueReusableCell(withIdentifier: Constants.TableIdentifier.movieCell, for: indexPath) as! MovieListCell
+        
+        let movie = movieListSections[indexPath.section].movies[indexPath.row]
+        cell.configure(movie)
+        
+        let imgseparator1 : UIImageView = UIImageView(frame: CGRect(x: 0, y: Constants.TableConstants.CELLHEIGHT - 1, width: self.view.frame.size.width, height: 1))
+        imgseparator1.backgroundColor = Constants.Color.secondaryColor
+        cell.addSubview(imgseparator1)
+        
+        
+        return cell
     }
     
 }
@@ -124,7 +143,7 @@ extension MovieListViewController: UISearchBarDelegate {
             if (movieListSearch.count > 0)
             {
                 self.movieListSections.removeAll()
-                self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieList)
+                self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieListSearch)
             }
             if searchText.count == 0
             {
@@ -132,7 +151,7 @@ extension MovieListViewController: UISearchBarDelegate {
                 self.movieListSections.removeAll()
                 self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieList)
             }
-            collectionView.reloadData()
+            movieListTableView.reloadData()
         }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar)
