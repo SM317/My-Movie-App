@@ -9,22 +9,93 @@
 import UIKit
 
 class MovieDetailsViewController: BaseViewController {
-
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var ratingPerLabel: UILabel!
+    @IBOutlet weak var taglineLabel: UILabel!
+    @IBOutlet weak var overviewLabel: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
+    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var castLabel: UILabel!
+    @IBOutlet weak var crewLabel: UILabel!
+    
+    var movieId: Int = 0
+    var movieObject : Movie?
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = Constants.Strings.titleMovieDetail
+        titleLabel.textColor = Constants.Color.contactLabelColor
+        ratingLabel.textColor = Constants.Color.contactLabelColor
+        
+        self.fetchMovieDetail()
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    /**
+        This method is used to get  Movie Details from the server
+        */
+       private func fetchMovieDetail()
+       {
+           self.showCustomLoader()
+           DispatchQueue.main.async(execute: {
+            MovieController.movieDetail(movieId: self.movieId, withCompletion: { result in
+                   switch result {
+                   case .success(let movieDetails):
+                       self.hideCustomLoader()
+                       self.movieObject = movieDetails
+                       self.refreshUI()
+                   case .failure(let error):
+                       self.hideCustomLoader()
+                       self.ShowError(error.localizedDescription)
+                   }
+               })
+           })
+       }
+     
+    /**
+     This method is used to refresh the UI after the api call
+     */
+    private func refreshUI() {
+        
+        guard let movie = self.movieObject else {return}
+        titleLabel.text = movie.title
+        ratingLabel.text = movie.ratingText
+        imageView.kf.indicatorType = .activity
+        imageView.kf.setImage(with: movie.posterURL)
+        taglineLabel.text = movie.tagline
+        overviewLabel.text = movie.overview
+        yearLabel.text = Constants.dateFormatter.string(from: movie.releaseDate)
+        if movie.voteCount == 0 {
+            ratingPerLabel.isHidden = true
+        } else {
+            ratingPerLabel.isHidden = false
+            ratingPerLabel.text = movie.voteAveragePercentText
+        }
+                
+        durationLabel.text = "\(movie.runtime ?? 0) mins"
+        if let genres = movie.genres, genres.count > 0 {
+            genreLabel.isHidden = false
+            genreLabel.text = genres.map { $0.name }.joined(separator: ", ")
+        } else {
+            genreLabel.isHidden = true
+        }
+        
+        if let casts = movie.credits?.cast, casts.count > 0 {
+            castLabel.isHidden = false
+            castLabel.text = "Cast: \(casts.prefix(upTo: 3).map { $0.name }.joined(separator: ", "))"
+        } else {
+            castLabel.isHidden = true
+        }
+        
+        if let director = movie.credits?.crew.first(where: {$0.job == "Director"}) {
+            crewLabel.isHidden = false
+            crewLabel.text = "Director: \(director.name)"
+        } else {
+            crewLabel.isHidden = true
+        }
     }
-    */
-
 }

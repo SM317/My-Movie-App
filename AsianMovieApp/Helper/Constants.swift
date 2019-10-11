@@ -27,7 +27,6 @@ import UIKit
     enum TableIdentifier
     {
         static let movieCell = "movieCell"
-        static let loadMoreMovieCell = "loadCell"
     }
     
     enum TableConstants
@@ -38,7 +37,6 @@ import UIKit
     enum TableCustomCell
     {
         static let movie  = "MovieListCell"
-        static let loadMovie  = "LoadMovieCell"
     }
     
     enum APIMethodType{
@@ -56,6 +54,17 @@ import UIKit
         static let applicationJson              = "application/json"
         static let contentType                  = "Content-Type"
         static let DATA                         = "data"
+        static let titleMovie                   = "Movies List"
+        static let titleMovieDetail             = "Movie Details"
     }
+    enum StoryBoardIdentifier{
+        static let movieDetail                  = "viewDetailController"
+    }
+    
+    public static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY"
+        return dateFormatter
+    }()
     
 }

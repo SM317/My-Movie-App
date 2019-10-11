@@ -10,6 +10,39 @@ import Foundation
 import UIKit
 
 
+extension Array {
+    func unique<T:Hashable>(map: ((Element) -> (T)))  -> [Element] {
+        var set = Set<T>() //the unique list kept in a Set for fast retrieval
+        var arrayOrdered = [Element]() //keeping the unique list of elements but ordered
+        for value in self {
+            if !set.contains(map(value)) {
+                set.insert(map(value))
+                arrayOrdered.append(value)
+            }
+        }
+
+        return arrayOrdered
+    }
+}
+
+extension UIImage {
+   func imageWithBorder(width: CGFloat, color: UIColor) -> UIImage? {
+       let square = CGSize(width: min(size.width, size.height) + width * 2, height: min(size.width, size.height) + width * 2)
+       let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
+       imageView.contentMode = .center
+       imageView.image = self
+       imageView.layer.borderWidth = width
+       imageView.layer.borderColor = color.cgColor
+       UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+       guard let context = UIGraphicsGetCurrentContext() else { return nil }
+       imageView.layer.render(in: context)
+       let result = UIGraphicsGetImageFromCurrentImageContext()
+       UIGraphicsEndImageContext()
+       return result
+   }
+}
+    
+
 extension UIColor {
     convenience init(hexString:String) {
         let hexString:NSString = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) as NSString

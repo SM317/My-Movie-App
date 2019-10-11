@@ -11,23 +11,22 @@ import UIKit
 class MovieListViewController: BaseViewController {
 
       @IBOutlet weak var searchBar: UISearchBar!
-     @IBOutlet weak var movieListTableView: UITableView!
-     @IBOutlet var infoLabel: UILabel!
+      @IBOutlet weak var movieListTableView: UITableView!
+      @IBOutlet var infoLabel: UILabel!
 
-      fileprivate var movieList: [Movie] = []
-      fileprivate var movieListSearch: [Movie] = []
-      fileprivate  var movieListSections: [MovieListSection] = []
-      fileprivate  var selectedContactURL: String?
-      fileprivate var isSearchActive : Bool = false
-      fileprivate var pageindex: Int = 1
-      fileprivate var totalPages : Int = 0
-      var isDataLoading:Bool=false
-      var refreshControl = UIRefreshControl()
+       var movieList: [Movie] = []
+       var movieListTemp: [Movie] = []
+       var movieListSearch: [Movie] = []
+       var movieListSections: [MovieListSection] = []
+       var isSearchActive : Bool = false
+       var pageindex: Int = 1
+       var totalPages : Int = 0
+       var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Movie List"
+        self.title = Constants.Strings.titleMovie
         
          self.movieListTableView!.register(UINib.init(nibName: Constants.TableCustomCell.movie, bundle: nil), forCellReuseIdentifier: Constants.TableIdentifier.movieCell)
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -53,11 +52,14 @@ class MovieListViewController: BaseViewController {
                 switch result {
                 case .success(let allMovie):
                     self.hideCustomLoader()
-                    self.movieList.append(contentsOf: allMovie.results)
+                    self.clearData()
+                    self.movieListTemp.append(contentsOf: allMovie.results)
+                    self.movieList.append(contentsOf: self.movieListTemp.unique{$0.id})
                     self.totalPages = allMovie.totalPages
                     self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieList)
                     self.refreshUI()
                 case .failure(let error):
+                    self.refreshControl.endRefreshing()
                     self.hideCustomLoader()
                     self.ShowError(error.localizedDescription)
                 }
@@ -65,6 +67,21 @@ class MovieListViewController: BaseViewController {
         })
     }
     
+    private func clearData()
+    {
+        if self.movieListSections.count > 0{
+            self.movieListSections.removeAll()
+        }
+        if self.movieList.count > 0{
+            self.movieList.removeAll()
+        }
+    }
+    
+    private func loadMoreData()
+    {
+        self.pageindex += 1
+        fetchMovies()
+    }
     
     /**
      This method is used to refresh the UI after the api call
@@ -74,6 +91,7 @@ class MovieListViewController: BaseViewController {
             guard let weakSelf = self else {
                 return
             }
+            self?.refreshControl.endRefreshing()
             self?.hideCustomLoader()
             weakSelf.movieListTableView.reloadData()
         }
@@ -122,11 +140,27 @@ extension MovieListViewController: UITableViewDataSource {
         imgseparator1.backgroundColor = Constants.Color.secondaryColor
         cell.addSubview(imgseparator1)
         
-        
+        if indexPath.section == movieListSections.count - 1
+        {
+            self.loadMoreData()
+        }
         return cell
     }
     
 }
+
+extension MovieListViewController: UITableViewDelegate {
+    // MARK: - UITableview Delegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = movieListSections[indexPath.section].movies[indexPath.row]
+       
+        let storyBoard : UIStoryboard = AppDelegate.sharedInstance().get_StoryboardMain_Instance()
+        let detailController = storyBoard.instantiateViewController(withIdentifier: Constants.StoryBoardIdentifier.movieDetail) as! MovieDetailsViewController
+        detailController.movieId = data.id
+        self.navigationController?.pushViewController(detailController, animated: true)
+    }
+}
+
 
 //MARK:- UISearchBarDelegate & UISearchResultsUpdating
 extension MovieListViewController: UISearchBarDelegate {
@@ -166,7 +200,7 @@ extension MovieListViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.text = ""
-       self.hideKeyboard()
+        self.hideKeyboard()
         self.movieListSearch.removeAll()
         self.movieListSections.removeAll()
         self.movieListSections = MovieController.getAllMoviesWithIndex(movies: self.movieList)

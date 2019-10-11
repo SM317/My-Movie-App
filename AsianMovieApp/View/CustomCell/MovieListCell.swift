@@ -44,6 +44,8 @@ class MovieListCell: UITableViewCell {
     func configure(_ movie: Movie) {
         movieImage.kf.indicatorType = .activity
         movieImage.kf.setImage(with: movie.posterURL)
+        movieImage.layer.borderColor = Constants.Color.primaryColor.cgColor
+        movieImage.layer.borderWidth = 5.0
         
         titleLabel.text = movie.title
         castLabel.text =  "Overview : " + movie.overview
