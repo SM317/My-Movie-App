@@ -10,6 +10,7 @@ import UIKit
 
 class MovieDetailsViewController: BaseViewController {
     
+    @IBOutlet weak var layoutConstraintsOverviewHeight: NSLayoutConstraint!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
@@ -28,9 +29,13 @@ class MovieDetailsViewController: BaseViewController {
         super.viewDidLoad()
 
         self.title = Constants.Strings.titleMovieDetail
-        titleLabel.textColor = Constants.Color.contactLabelColor
-        ratingLabel.textColor = Constants.Color.contactLabelColor
-        
+        overviewLabel.textColor = Constants.Color.Theame_TextColor_Gray
+        yearLabel.textColor = Constants.Color.Theame_TextColor_Gray
+        ratingPerLabel.textColor = Constants.Color.Theame_TextColor_Gray
+        durationLabel.textColor = Constants.Color.Theame_TextColor_Gray
+        genreLabel.textColor = Constants.Color.Theame_TextColor_Gray
+        crewLabel.textColor = Constants.Color.Theame_TextColor_Gray
+        castLabel.textColor = Constants.Color.Theame_TextColor_Gray
         self.fetchMovieDetail()
         // Do any additional setup after loading the view.
     }
@@ -65,10 +70,15 @@ class MovieDetailsViewController: BaseViewController {
         titleLabel.text = movie.title
         ratingLabel.text = movie.ratingText
         imageView.kf.indicatorType = .activity
-        imageView.kf.setImage(with: movie.posterURL)
+        imageView.kf.setImage(with: movie.backdropURL)
+        imageView.layer.borderColor = Constants.Color.primaryColor.cgColor
+        imageView.layer.borderWidth = 6.0
         taglineLabel.text = movie.tagline
-        overviewLabel.text = movie.overview
-        yearLabel.text = Constants.dateFormatter.string(from: movie.releaseDate)
+        overviewLabel.text = "Overview: " + movie.overview
+        
+        let height = movie.overview.height(constraintedWidth: self.view.frame.size.width - 32, font: overviewLabel.font)
+        layoutConstraintsOverviewHeight.constant = height
+        yearLabel.text =  "Release year: " + Constants.dateFormatter.string(from: movie.releaseDate)
         if movie.voteCount == 0 {
             ratingPerLabel.isHidden = true
         } else {

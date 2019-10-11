@@ -22,6 +22,7 @@ import UIKit
         static let primaryLighterColor = UIColor.init(hexString: "#DEF5EF")
         static let secondaryColor = UIColor.lightGray
         static let contactLabelColor =  UIColor.init(hexString: "#4A4A4A")
+        static let Theame_TextColor_Gray               = UIColor.init(hexString: "#445356")
     }
     
     enum TableIdentifier
@@ -67,4 +68,13 @@ import UIKit
         return dateFormatter
     }()
     
+    public static func getImageWithColor(_ color: UIColor, size: CGSize) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return image
+    }
 }
