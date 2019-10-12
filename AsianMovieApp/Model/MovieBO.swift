@@ -28,7 +28,6 @@ public struct Movie: Codable {
     public let tagline: String?
     public let originalLanguage: String?
     public let genres: [MovieGenre]?
-    public let videos: MovieVideoResponse?
     public let credits: MovieCreditResponse?
     public let adult: Bool
     public let runtime: Int?
@@ -56,26 +55,6 @@ public struct Movie: Codable {
 
 public struct MovieGenre: Codable {
     let name: String
-}
-
-public struct MovieVideoResponse: Codable {
-    public let results: [MovieVideo]
-}
-
-public struct MovieVideo: Codable {
-    public let id: String
-    public let key: String
-    public let name: String
-    public let site: String
-    public let size: Int
-    public let type: String
-    
-    public var youtubeURL: URL? {
-        guard site == "YouTube" else {
-            return nil
-        }
-        return URL(string: "https://www.youtube.com/watch?v=\(key)")
-    }
 }
 
 public struct MovieCreditResponse: Codable {

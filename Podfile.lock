@@ -1,20 +1,16 @@
 PODS:
-  - Cosmos (19.0.3)
   - Kingfisher (5.6.0)
 
 DEPENDENCIES:
-  - Cosmos
   - Kingfisher
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Cosmos
     - Kingfisher
 
 SPEC CHECKSUMS:
-  Cosmos: a6fb17284281fa12cf4c85c2efecd440a215ec44
   Kingfisher: 1a50df6880a60bae26f3e21a0df3d17b892f5e0b
 
-PODFILE CHECKSUM: cdb123104f18f85652eb978744c58df6655a8cd4
+PODFILE CHECKSUM: 1986f7a343bdd40e9539d8fb92fc17c46b029a2a
 
 COCOAPODS: 1.7.4

@@ -25,7 +25,6 @@ class MovieDetailsViewController: BaseViewController {
     
     var movieId: Int = 0
     var movieObject : Movie?
-    var movieVideos : [MovieVideo] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
