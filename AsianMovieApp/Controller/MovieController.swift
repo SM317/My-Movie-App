@@ -29,12 +29,7 @@ public struct MovieController {
             return APIClient.request(from: url, with: [:], methodType: Constants.APIMethodType.get, withCompletion: { (result: MovieHttpResponse<Data>) in
             switch result {
             case .success(let data):
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-mm-dd"
-                decoder.dateDecodingStrategy = .formatted(dateFormatter)
-                let list = try? decoder.decode(MoviesResponse.self, from: data)
+                let list = try? Constants.parseObjectDecoder().decode(MoviesResponse.self, from: data)
                 if let movieObject = list{
                       completion(.success(movieObject))
                 }
@@ -57,12 +52,7 @@ public struct MovieController {
             return APIClient.request(from: url, with: [:], methodType: Constants.APIMethodType.get, withCompletion: { (result: MovieHttpResponse<Data>) in
             switch result {
             case .success(let data):
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-mm-dd"
-                decoder.dateDecodingStrategy = .formatted(dateFormatter)
-                let list = try? decoder.decode(Movie.self, from: data)
+                let list = try? Constants.parseObjectDecoder().decode(Movie.self, from: data)
                 if let movieObject = list{
                       completion(.success(movieObject))
                 }
@@ -74,7 +64,6 @@ public struct MovieController {
             }
         })
     }
-    
     
     /**
         Get all movies with index titles
@@ -94,27 +83,5 @@ public struct MovieController {
             }
            }
            return calicutaingSections
-       }
-    
-     static func getWidthForMovies(_ screenSize : CGFloat,devicesCount : Int) ->CGFloat
-         {
-             let noOfDevices : CGFloat = 2
-             let width = (screenSize - 40) / noOfDevices
-             return width
-         }
-         
-       static func getEdgeInsetMakeForMovies(_ screenSize : CGFloat,devicesCount : Int) ->CGFloat
-       {
-           var width : CGFloat = 0.0
-           var offset : CGFloat = 0.0
-           if devicesCount == 1
-           {
-               width = (screenSize - 40) / 2
-               offset = (screenSize - width) / 2
-           }
-           else{
-               offset = 15.0
-           }
-           return offset
        }
 }

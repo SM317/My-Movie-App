@@ -19,12 +19,12 @@
 		00313C70234F3C88003817C4 /* MovieListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00313C6E234F3C88003817C4 /* MovieListCell.swift */; };
 		00313C71234F3C88003817C4 /* MovieListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00313C6F234F3C88003817C4 /* MovieListCell.xib */; };
 		004A95C7234CAA8800C29340 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004A95C6234CAA8800C29340 /* AppDelegate.swift */; };
-		004A95CB234CAA8800C29340 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004A95CA234CAA8800C29340 /* ViewController.swift */; };
 		004A95CE234CAA8800C29340 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 004A95CC234CAA8800C29340 /* Main.storyboard */; };
 		004A95D0234CAAAB00C29340 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 004A95CF234CAAAB00C29340 /* Assets.xcassets */; };
 		004A95D3234CAAAB00C29340 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 004A95D1234CAAAB00C29340 /* LaunchScreen.storyboard */; };
 		004A95DE234CAAAB00C29340 /* AsianMovieAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004A95DD234CAAAB00C29340 /* AsianMovieAppTests.swift */; };
 		004A95E9234CAAAC00C29340 /* AsianMovieAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004A95E8234CAAAC00C29340 /* AsianMovieAppUITests.swift */; };
+		0080B3E123518D24002DA681 /* MovieControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080B3E023518D24002DA681 /* MovieControllerTest.swift */; };
 		0E517CF0DE2AA6EFD7301EEE /* Pods_AsianMovieAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF19A5B3B97C24A6CCE5C61D /* Pods_AsianMovieAppTests.framework */; };
 		DA04DA79FD5A3968BE51E7CD /* Pods_AsianMovieAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BBE7294BF4DAB79BFC7BFC8 /* Pods_AsianMovieAppUITests.framework */; };
 		EAB7FFF7152A623178F23761 /* Pods_AsianMovieApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96F80A89B8484AAFA97A8A7 /* Pods_AsianMovieApp.framework */; };
@@ -61,7 +61,6 @@
 		00313C6F234F3C88003817C4 /* MovieListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieListCell.xib; sourceTree = "<group>"; };
 		004A95C3234CAA8800C29340 /* AsianMovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsianMovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		004A95C6234CAA8800C29340 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		004A95CA234CAA8800C29340 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		004A95CD234CAA8800C29340 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		004A95CF234CAAAB00C29340 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		004A95D2234CAAAB00C29340 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		004A95E4234CAAAB00C29340 /* AsianMovieAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsianMovieAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		004A95E8234CAAAC00C29340 /* AsianMovieAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsianMovieAppUITests.swift; sourceTree = "<group>"; };
 		004A95EA234CAAAC00C29340 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0080B3E023518D24002DA681 /* MovieControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieControllerTest.swift; sourceTree = "<group>"; };
 		0288C428562A583A5660D92C /* Pods-AsianMovieAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsianMovieAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AsianMovieAppUITests/Pods-AsianMovieAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		0D8F8C86CA751B2DD007B493 /* Pods-AsianMovieAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsianMovieAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AsianMovieAppTests/Pods-AsianMovieAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3D7380D5947C86B87C9F2F74 /* Pods-AsianMovieAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsianMovieAppTests.release.xcconfig"; path = "Target Support Files/Pods-AsianMovieAppTests/Pods-AsianMovieAppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -151,7 +151,6 @@
 				004A95FB234CC92B00C29340 /* Services */,
 				004A95FA234CC92B00C29340 /* Interface */,
 				004A95F9234CC92B00C29340 /* Helper */,
-				004A95CA234CAA8800C29340 /* ViewController.swift */,
 				004A95CF234CAAAB00C29340 /* Assets.xcassets */,
 				004A95D4234CAAAB00C29340 /* Info.plist */,
 			);
@@ -163,6 +162,7 @@
 			children = (
 				004A95DD234CAAAB00C29340 /* AsianMovieAppTests.swift */,
 				004A95DF234CAAAB00C29340 /* Info.plist */,
+				0080B3E023518D24002DA681 /* MovieControllerTest.swift */,
 			);
 			path = AsianMovieAppTests;
 			sourceTree = "<group>";
@@ -501,7 +501,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				002C7B30234DF3C800C536B4 /* MovieController.swift in Sources */,
-				004A95CB234CAA8800C29340 /* ViewController.swift in Sources */,
 				002C7B27234DDC7900C536B4 /* Extensions.swift in Sources */,
 				002C7B19234DD36E00C536B4 /* MovieBO.swift in Sources */,
 				002C7B2B234DEE8100C536B4 /* APIClient.swift in Sources */,
@@ -519,6 +518,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0080B3E123518D24002DA681 /* MovieControllerTest.swift in Sources */,
 				004A95DE234CAAAB00C29340 /* AsianMovieAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,18 +16,9 @@ class MovieListCell: UITableViewCell {
       @IBOutlet var ratingLabel: UILabel!
       @IBOutlet var directorLabel: UILabel!
       @IBOutlet var castLabel: UILabel!
-      
-      private let dateFormatter: DateFormatter = {
-          let formatter = DateFormatter()
-          formatter.dateStyle = .long
-          formatter.timeStyle = .none
-          
-          return formatter
-      }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         titleLabel.textColor = Constants.Color.contactLabelColor
         ratingLabel.textColor = Constants.Color.contactLabelColor
         directorLabel.textColor = Constants.Color.contactLabelColor
@@ -37,7 +28,6 @@ class MovieListCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
@@ -48,19 +38,14 @@ class MovieListCell: UITableViewCell {
         movieImage.layer.borderWidth = 5.0
         
         titleLabel.text = movie.title
-        castLabel.text =  "Overview : " + movie.overview
+        castLabel.text =  Constants.Strings.overviewText + movie.overview
         
-        if let lang = movie.originalLanguage
+        if let date = movie.releaseDate
         {
-             directorLabel.text = "Language : " + lang
+            directorLabel.text = Constants.Strings.releaseDateText + date
         }
-       
-        if movie.ratingText.isEmpty {
-            ratingLabel.text = dateFormatter.string(from: movie.releaseDate)
-        } else {
-            ratingLabel.text = movie.ratingText
-
-        }
+        ratingLabel.text = movie.ratingText
+        
     }
     
 }

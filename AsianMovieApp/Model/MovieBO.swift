@@ -22,7 +22,7 @@ public struct Movie: Codable {
     public let backdropPath: String?
     public let posterPath: String?
     public let overview: String
-    public let releaseDate: Date
+    public let releaseDate: String?
     public let voteAverage: Double
     public let voteCount: Int
     public let tagline: String?
@@ -33,11 +33,11 @@ public struct Movie: Codable {
     public let adult: Bool
     public let runtime: Int?
     public var posterURL: URL {
-        return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")!
+        return URL(string: Constants.Config.posterURL + "\(posterPath ?? "")")!
     }
     
     public var backdropURL: URL {
-        return URL(string: "https://image.tmdb.org/t/p/original\(backdropPath ?? "")")!
+        return URL(string: Constants.Config.backDropURL + "\(backdropPath ?? "")")!
     }
     
     public var voteAveragePercentText: String {

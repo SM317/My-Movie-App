@@ -62,7 +62,6 @@ class BaseViewController: UIViewController {
       /**
        * Showing the custom loader
        */
-      
       func showCustomLoader()
       {
           DispatchQueue.main.async { () -> Void in
@@ -103,7 +102,6 @@ class BaseViewController: UIViewController {
       /**
        * hiding the custom loader
        */
-      
       func hideCustomLoader()
       {
           DispatchQueue.main.async(execute: {
@@ -118,7 +116,6 @@ class BaseViewController: UIViewController {
               self.isRotating = false
           })
       }
-      
     
     /**
      * showing error in the alert
@@ -126,7 +123,6 @@ class BaseViewController: UIViewController {
      */
     func ShowError(_ strErrorText : String)
     {
-        
         let alertController:UIAlertController = UIAlertController.init(title: "Error", message: strErrorText, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction.init(title: "Ok", style: UIAlertAction.Style.cancel, handler: { (UIAlertAction) -> Void in
             DispatchQueue.main.async { () -> Void in
@@ -136,7 +132,6 @@ class BaseViewController: UIViewController {
         DispatchQueue.main.async { () -> Void in
             self.present(alertController, animated: true, completion: nil)
         }
-        
     }
 
 }

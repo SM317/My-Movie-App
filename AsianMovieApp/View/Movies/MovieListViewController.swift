@@ -29,7 +29,7 @@ class MovieListViewController: BaseViewController {
         self.title = Constants.Strings.titleMovie
         
          self.movieListTableView!.register(UINib.init(nibName: Constants.TableCustomCell.movie, bundle: nil), forCellReuseIdentifier: Constants.TableIdentifier.movieCell)
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.attributedTitle = NSAttributedString(string: Constants.Strings.pullRefreshText)
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: UIControl.Event.valueChanged)
         movieListTableView.addSubview(refreshControl)
         fetchMovies()
@@ -131,7 +131,7 @@ extension MovieListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-          let cell:MovieListCell = tableView.dequeueReusableCell(withIdentifier: Constants.TableIdentifier.movieCell, for: indexPath) as! MovieListCell
+        let cell:MovieListCell = tableView.dequeueReusableCell(withIdentifier: Constants.TableIdentifier.movieCell, for: indexPath) as! MovieListCell
         
         let movie = movieListSections[indexPath.section].movies[indexPath.row]
         cell.configure(movie)

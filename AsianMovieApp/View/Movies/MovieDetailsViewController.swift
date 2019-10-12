@@ -25,6 +25,7 @@ class MovieDetailsViewController: BaseViewController {
     
     var movieId: Int = 0
     var movieObject : Movie?
+    var movieVideos : [MovieVideo] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -66,46 +67,46 @@ class MovieDetailsViewController: BaseViewController {
      */
     private func refreshUI() {
         
-        guard let movie = self.movieObject else {return}
-        titleLabel.text = movie.title
-        ratingLabel.text = movie.ratingText
-        imageView.kf.indicatorType = .activity
-        imageView.kf.setImage(with: movie.backdropURL)
-        imageView.layer.borderColor = Constants.Color.primaryColor.cgColor
-        imageView.layer.borderWidth = 6.0
-        taglineLabel.text = movie.tagline
-        overviewLabel.text = "Overview: " + movie.overview
+        if  let movie = self.movieObject{
+            titleLabel.text = movie.title
+            ratingLabel.text = movie.ratingText
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: movie.backdropURL)
+            taglineLabel.text = movie.tagline
+            overviewLabel.text = Constants.Strings.overviewText + movie.overview
+            
+            let height = movie.overview.height(constraintedWidth: self.view.frame.size.width - 32, font: overviewLabel.font)
+            layoutConstraintsOverviewHeight.constant = height + 20
+            yearLabel.text =  Constants.Strings.releaseDateText + (movie.releaseDate ?? "")
+            if movie.voteCount == 0 {
+                ratingPerLabel.isHidden = true
+            } else {
+                ratingPerLabel.isHidden = false
+                ratingPerLabel.text = movie.voteAveragePercentText
+            }
+                    
+            durationLabel.text = "\(movie.runtime ?? 0) mins"
+            if let genres = movie.genres, genres.count > 0 {
+                genreLabel.isHidden = false
+                genreLabel.text = genres.map { $0.name }.joined(separator: ", ")
+            } else {
+                genreLabel.isHidden = true
+            }
+            
+            if let casts = movie.credits?.cast, casts.count > 0 {
+                castLabel.isHidden = false
+                castLabel.text = Constants.Strings.castText + "\(casts.prefix(upTo: 3).map { $0.name }.joined(separator: ", "))"
+            } else {
+                castLabel.isHidden = true
+            }
+            
+            if let director = movie.credits?.crew.first(where: {$0.job == "Director"}) {
+                crewLabel.isHidden = false
+                crewLabel.text = Constants.Strings.directorText + "\(director.name)"
+            } else {
+                crewLabel.isHidden = true
+            }
+        }
         
-        let height = movie.overview.height(constraintedWidth: self.view.frame.size.width - 32, font: overviewLabel.font)
-        layoutConstraintsOverviewHeight.constant = height
-        yearLabel.text =  "Release year: " + Constants.dateFormatter.string(from: movie.releaseDate)
-        if movie.voteCount == 0 {
-            ratingPerLabel.isHidden = true
-        } else {
-            ratingPerLabel.isHidden = false
-            ratingPerLabel.text = movie.voteAveragePercentText
-        }
-                
-        durationLabel.text = "\(movie.runtime ?? 0) mins"
-        if let genres = movie.genres, genres.count > 0 {
-            genreLabel.isHidden = false
-            genreLabel.text = genres.map { $0.name }.joined(separator: ", ")
-        } else {
-            genreLabel.isHidden = true
-        }
-        
-        if let casts = movie.credits?.cast, casts.count > 0 {
-            castLabel.isHidden = false
-            castLabel.text = "Cast: \(casts.prefix(upTo: 3).map { $0.name }.joined(separator: ", "))"
-        } else {
-            castLabel.isHidden = true
-        }
-        
-        if let director = movie.credits?.crew.first(where: {$0.job == "Director"}) {
-            crewLabel.isHidden = false
-            crewLabel.text = "Director: \(director.name)"
-        } else {
-            crewLabel.isHidden = true
-        }
     }
 }

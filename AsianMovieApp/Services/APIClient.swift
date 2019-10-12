@@ -71,11 +71,6 @@ public struct APIClient {
                 return
             }
             
-            guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
-                completion(.failure(MovieError.invalidResponse))
-                return
-            }
-            
             guard let data = data else {
                 completion(.failure(MovieError.noData))
                 return
