@@ -71,6 +71,7 @@ class MovieControllerTest: XCTestCase {
         waitForExpectations(timeout: 10, handler: { error in })
     }
     
+    
     func testPerformanceMovies() {
         // This is an example of a performance test case.
         self.measure {
@@ -85,6 +86,7 @@ class MovieControllerTest: XCTestCase {
             })
         }
     }
+    
     func testPerformanceMovieDetail() {
         // This is an example of a performance test case.
         self.measure {
